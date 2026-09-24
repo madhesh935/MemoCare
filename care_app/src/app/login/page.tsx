@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { mocksEnabled } from "@/lib/api/client";
 import { Button } from "@/components/ui/Button";
 import { PageState } from "@/components/ui/PageState";
 
@@ -84,10 +85,24 @@ function LoginForm() {
             {submitting ? "Signing in…" : "Sign in"}
           </Button>
           <div className="rounded-lg bg-[var(--color-mist)] p-3 text-xs text-[var(--color-ink-muted)]">
-            <p>
-              Sign in with your care network email. If you need access, ask your
-              administrator.
-            </p>
+            {mocksEnabled() ? (
+              <>
+                <p className="font-medium text-[var(--color-ink)]">Demo accounts</p>
+                <p className="mt-1">
+                  Caregiver: <code>riya.caregiver@example.com</code> /{" "}
+                  <code>demo1234</code>
+                </p>
+                <p>
+                  Healthcare worker: <code>ananya.worker@example.com</code> /{" "}
+                  <code>demo1234</code>
+                </p>
+              </>
+            ) : (
+              <p>
+                Sign in with your care network email. If you need access, ask
+                your administrator.
+              </p>
+            )}
           </div>
         </form>
       </div>
